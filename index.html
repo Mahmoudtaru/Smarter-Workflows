@@ -90,8 +90,8 @@
 
         .content-card {
             background-color: var(--primary-light);
-            border: 2px solid #cbd5e1; /* Thicker distinct border */
-            border-top: 4px solid var(--accent-navy);
+            border: 2px solid var(--accent-navy); 
+            border-top: 5px solid var(--accent-green);
             border-radius: 0.75rem;
             transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
@@ -102,12 +102,8 @@
         }
         .dark .content-card {
             background-color: var(--primary-dark);
-            border-color: #475569;
-            border-top-color: var(--accent-green);
+            border-color: var(--accent-green);
             color: var(--text-light);
-        }
-        .dark .content-card:hover {
-             box-shadow: 0 10px 15px -3px rgba(146, 180, 59, 0.15);
         }
 
         .page-title { color: var(--accent-navy); }
@@ -120,8 +116,8 @@
 
         .nested-accordion {
             background-color: #ffffff;
-            border: 2px solid #cbd5e1;
-            border-right: 6px solid var(--accent-green); /* Stronger indicator */
+            border: 2px solid var(--accent-navy);
+            border-right: 6px solid var(--accent-green);
             border-radius: 0.75rem;
             margin-bottom: 1.25rem;
             overflow: hidden;
@@ -138,18 +134,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid transparent;
+            border-bottom: 2px solid var(--accent-navy);
             transition: all 0.3s;
         }
         .nested-accordion-header[aria-expanded="true"] {
-            border-bottom-color: #e2e8f0;
             background-color: #f1f5f9;
         }
         .nested-accordion-header:hover { background-color: #f1f5f9; }
         
-        .dark .nested-accordion { background-color: #1e293b; border-color: #475569; }
-        .dark .nested-accordion-header { background-color: #0f172a; color: var(--accent-green); }
-        .dark .nested-accordion-header[aria-expanded="true"] { border-bottom-color: #475569; background-color: #1e293b; }
+        .dark .nested-accordion { background-color: #1e293b; border-color: var(--accent-green); border-right-color: var(--accent-green); }
+        .dark .nested-accordion-header { background-color: #0f172a; color: var(--accent-green); border-bottom-color: var(--accent-green); }
+        .dark .nested-accordion-header[aria-expanded="true"] { background-color: #1e293b; }
         .dark .nested-accordion-header:hover { background-color: #1e293b; }
 
         .nested-accordion-content {
@@ -381,7 +376,7 @@
         );
 
         const GlobalProgressBar = ({ title, progress, completedCount, totalCount, icon }) => (
-            <div className="content-card p-5 rounded-xl shadow-md">
+            <div className="content-card p-5 rounded-xl shadow-md border-2 border-[--accent-navy] dark:border-[--accent-green]">
                 <div className="flex justify-between items-center mb-3">
                     <h3 className="section-header text-lg font-extrabold flex items-center gap-2">
                         <div className="bg-gray-100 dark:bg-slate-700 p-2 rounded-lg border border-gray-200 dark:border-slate-600"><Icon name={icon} className="w-5 h-5 text-[--accent-navy] dark:text-[--accent-green]"/></div>
@@ -403,7 +398,7 @@
         const Accordion = ({ title, isOpen, onToggle, children, progress, isLocked }) => {
             const isComplete = progress === 100;
             return (
-                <div className={`content-card rounded-xl overflow-hidden shadow-md transition-all duration-300 ${isLocked ? 'opacity-60 bg-gray-50' : ''} ${isOpen ? 'ring-2 ring-[--accent-green]/50 transform scale-[1.01]' : ''}`}>
+                <div className={`content-card rounded-xl overflow-hidden shadow-md transition-all duration-300 border-2 border-[--accent-navy] dark:border-[--accent-green] ${isLocked ? 'opacity-60 bg-gray-50' : ''} ${isOpen ? 'ring-2 ring-[--accent-green]/50 transform scale-[1.01]' : ''}`}>
                     <button aria-expanded={isOpen} className="accordion-header w-full text-right p-5 flex flex-col text-lg sm:text-xl font-extrabold hover:bg-gray-50 dark:hover:bg-slate-800/80 focus:outline-none transition-colors border-b border-transparent" onClick={onToggle} disabled={isLocked}>
                         <div className="flex justify-between items-center w-full">
                             <span className="flex items-center gap-3 text-right">
@@ -420,18 +415,18 @@
                              </div>
                         )}
                     </button>
-                    <div className="accordion-content" style={{ maxHeight: isOpen ? '8000px' : '0' }}>
-                        <div className="p-5 border-t border-gray-200 dark:border-slate-700 space-y-6 bg-white dark:bg-[#141c29]">{children}</div>
+                    <div className="accordion-content border-t-2 border-[--accent-navy] dark:border-[--accent-green]" style={{ maxHeight: isOpen ? '8000px' : '0' }}>
+                        <div className="p-5 space-y-6 bg-white dark:bg-[#141c29]">{children}</div>
                     </div>
                 </div>
             );
         };
 
         const NestedAccordion = ({ title, icon, isOpen, onToggle, children }) => (
-            <div className={`nested-accordion ${isOpen ? 'border-[--accent-green]/50 shadow-md transform scale-[1.01]' : 'border-gray-200 dark:border-slate-700'}`}>
-                <button aria-expanded={isOpen} className="nested-accordion-header w-full" onClick={onToggle}>
+            <div className={`nested-accordion border-2 border-[--accent-navy] dark:border-[--accent-green] ${isOpen ? 'shadow-md transform scale-[1.01]' : ''}`}>
+                <button aria-expanded={isOpen} className="nested-accordion-header w-full border-b-2 border-transparent" onClick={onToggle}>
                     <span className="flex items-center gap-3">
-                        <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 p-2 rounded-lg shadow-sm">
+                        <div className="bg-white dark:bg-slate-800 border border-[--accent-navy] dark:border-[--accent-green] p-2 rounded-lg shadow-sm">
                             <Icon name={icon} className="w-5 h-5 text-[--accent-green]" />
                         </div>
                         <span className="font-extrabold text-lg">{title}</span>
@@ -440,23 +435,23 @@
                         <Icon name="chevron-down" className={`transition-transform duration-300 text-gray-500 dark:text-gray-400 ${isOpen ? 'rotate-180 text-[--accent-green]' : ''}`} />
                     </div>
                 </button>
-                <div className="nested-accordion-content" style={{ maxHeight: isOpen ? '5000px' : '0' }}>
-                    <div className="nested-accordion-content-inner text-gray-700 space-y-4 bg-gray-50/50 dark:bg-slate-900/50 border-t border-gray-200 dark:border-slate-700 p-5">{children}</div>
+                <div className="nested-accordion-content border-t-2 border-[--accent-navy] dark:border-[--accent-green]" style={{ maxHeight: isOpen ? '5000px' : '0' }}>
+                    <div className="nested-accordion-content-inner text-gray-700 space-y-4 bg-gray-50/50 dark:bg-slate-900/50 p-5">{children}</div>
                 </div>
             </div>
         );
 
         const RecommendationLink = ({ href, icon, title, description }) => (
-            <a href={href} target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-slate-800 border-2 border-gray-100 dark:border-slate-700 hover:border-[--accent-green] dark:hover:border-[--accent-green] transition-all w-full shadow-sm hover:shadow-md group">
+            <a href={href} target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-slate-800 border-2 border-gray-200 dark:border-gray-600 hover:border-[--accent-green] dark:hover:border-[--accent-green] transition-all w-full shadow-sm hover:shadow-md group">
                 <div className="bg-gray-50 dark:bg-slate-700 p-3 rounded-lg border border-gray-100 dark:border-slate-600 group-hover:bg-green-50 dark:group-hover:bg-slate-600 group-hover:border-green-200 transition-colors shadow-sm">
                     <Icon name={icon} className="w-6 h-6 text-[--accent-green] flex-shrink-0" />
                 </div>
                 <div className="flex-grow pt-1">
-                    <span className="font-extrabold text-lg text-gray-800 dark:text-gray-200 group-hover:text-[--accent-green] transition-colors">{title}</span>
+                    <span className="font-extrabold text-lg text-[--accent-navy] dark:text-gray-200 group-hover:text-[--accent-green] transition-colors">{title}</span>
                     {description && <p className="text-sm font-semibold text-gray-600 dark:text-gray-400 mt-1.5 leading-relaxed">{description}</p>}
                 </div>
                 <div className="bg-gray-50 dark:bg-slate-700 p-2 rounded-lg border border-gray-100 dark:border-slate-600 group-hover:bg-[--accent-green] transition-colors mt-1">
-                    <Icon name="external-link" className="w-4 h-4 text-gray-400 group-hover:text-white transition-colors" />
+                    <Icon name="external-link" className="w-4 h-4 text-gray-500 group-hover:text-white transition-colors" />
                 </div>
             </a>
         );
@@ -524,21 +519,21 @@
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                    <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl border-2 border-gray-100 dark:border-slate-700 border-t-4 border-t-[--accent-green] shadow-md text-center transform transition-all hover:-translate-y-1 hover:shadow-lg">
+                    <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl border-2 border-[--accent-navy] dark:border-[--accent-green] border-t-4 border-t-[--accent-green] shadow-md text-center transform transition-all hover:-translate-y-1 hover:shadow-lg">
                         <div className="bg-green-50 dark:bg-slate-700 w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-4 shadow-sm border border-green-100 dark:border-slate-600">
                             <Icon name="network" className="w-8 h-8 text-[--accent-green]" />
                         </div>
                         <h3 className="font-extrabold text-3xl text-[--accent-navy] dark:text-white mb-2">{workflowsData.length}</h3>
                         <p className="text-gray-600 dark:text-gray-400 font-bold text-sm">مسارات عملية متكاملة</p>
                     </div>
-                    <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl border-2 border-gray-100 dark:border-slate-700 border-t-4 border-t-[--accent-green] shadow-md text-center transform transition-all hover:-translate-y-1 hover:shadow-lg">
+                    <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl border-2 border-[--accent-navy] dark:border-[--accent-green] border-t-4 border-t-[--accent-green] shadow-md text-center transform transition-all hover:-translate-y-1 hover:shadow-lg">
                         <div className="bg-green-50 dark:bg-slate-700 w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-4 shadow-sm border border-green-100 dark:border-slate-600">
                             <Icon name="wrench" className="w-8 h-8 text-[--accent-green]" />
                         </div>
                         <h3 className="font-extrabold text-3xl text-[--accent-navy] dark:text-white mb-2">80+</h3>
                         <p className="text-gray-600 dark:text-gray-400 font-bold text-sm">أداة ذكاء اصطناعي منتقاة</p>
                     </div>
-                    <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl border-2 border-gray-100 dark:border-slate-700 border-t-4 border-t-[--accent-green] shadow-md text-center transform transition-all hover:-translate-y-1 hover:shadow-lg">
+                    <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl border-2 border-[--accent-navy] dark:border-[--accent-green] border-t-4 border-t-[--accent-green] shadow-md text-center transform transition-all hover:-translate-y-1 hover:shadow-lg">
                         <div className="bg-green-50 dark:bg-slate-700 w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-4 shadow-sm border border-green-100 dark:border-slate-600">
                             <Icon name="bot" className="w-8 h-8 text-[--accent-green]" />
                         </div>
@@ -547,50 +542,50 @@
                     </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-md border-2 border-gray-100 dark:border-slate-700">
+                <div className="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-md border-2 border-[--accent-navy] dark:border-[--accent-green]">
                     <h3 className="text-2xl font-extrabold mb-6 flex items-center gap-3 text-[--accent-navy] dark:text-[--text-light] border-b-2 border-gray-100 dark:border-slate-700 pb-4">
                         <div className="bg-green-50 dark:bg-slate-700 p-2 rounded-lg border border-green-200 dark:border-slate-600"><Icon name="compass" className="text-[--accent-green]" /></div>
                         <span>كيف تعمل المنصة؟</span>
                     </h3>
                     <div className="grid md:grid-cols-2 gap-6">
-                        <div className="flex gap-4 items-start bg-gray-50 dark:bg-slate-900/50 p-5 rounded-xl border border-gray-200 dark:border-slate-600 shadow-sm transition-all hover:border-blue-300">
-                            <div className="bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 p-3.5 rounded-xl flex-shrink-0 border border-blue-200 dark:border-blue-800 shadow-sm"><Icon name="map-pin" className="w-6 h-6" /></div>
+                        <div className="flex gap-4 items-start bg-gray-50 dark:bg-slate-900/50 p-5 rounded-xl border-2 border-gray-200 dark:border-slate-600 shadow-sm transition-all hover:border-[--accent-green]">
+                            <div className="bg-blue-100 dark:bg-blue-900/40 text-[--accent-navy] dark:text-[--accent-green] p-3.5 rounded-xl flex-shrink-0 border border-blue-200 dark:border-blue-800 shadow-sm"><Icon name="map-pin" className="w-6 h-6" /></div>
                             <div><h4 className="font-extrabold text-lg mb-2 dark:text-white">1. اختر المسار</h4><p className="text-gray-600 dark:text-gray-400 text-sm font-semibold leading-relaxed">ابحث عن المهمة التي تريد إنجازها في قسم <button onClick={()=>navigateToTab('workflows')} className="text-[--accent-green] font-bold hover:underline bg-white dark:bg-slate-800 px-1 rounded shadow-sm border border-gray-200 dark:border-slate-700">المسارات</button>.</p></div>
                         </div>
-                        <div className="flex gap-4 items-start bg-gray-50 dark:bg-slate-900/50 p-5 rounded-xl border border-gray-200 dark:border-slate-600 shadow-sm transition-all hover:border-green-300">
-                            <div className="bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400 p-3.5 rounded-xl flex-shrink-0 border border-green-200 dark:border-green-800 shadow-sm"><Icon name="list-checks" className="w-6 h-6" /></div>
+                        <div className="flex gap-4 items-start bg-gray-50 dark:bg-slate-900/50 p-5 rounded-xl border-2 border-gray-200 dark:border-slate-600 shadow-sm transition-all hover:border-[--accent-green]">
+                            <div className="bg-green-100 dark:bg-green-900/40 text-[--accent-green] p-3.5 rounded-xl flex-shrink-0 border border-green-200 dark:border-green-800 shadow-sm"><Icon name="list-checks" className="w-6 h-6" /></div>
                             <div><h4 className="font-extrabold text-lg mb-2 dark:text-white">2. اتبع الخطوات</h4><p className="text-gray-600 dark:text-gray-400 text-sm font-semibold leading-relaxed">اقرأ الدليل خطوة بخطوة، واعرف الترتيب المنطقي للعمل.</p></div>
                         </div>
-                        <div className="flex gap-4 items-start bg-gray-50 dark:bg-slate-900/50 p-5 rounded-xl border border-gray-200 dark:border-slate-600 shadow-sm transition-all hover:border-purple-300">
-                            <div className="bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400 p-3.5 rounded-xl flex-shrink-0 border border-purple-200 dark:border-purple-800 shadow-sm"><Icon name="bot" className="w-6 h-6" /></div>
+                        <div className="flex gap-4 items-start bg-gray-50 dark:bg-slate-900/50 p-5 rounded-xl border-2 border-gray-200 dark:border-slate-600 shadow-sm transition-all hover:border-[--accent-green]">
+                            <div className="bg-purple-100 dark:bg-purple-900/40 text-[--accent-navy] dark:text-[--accent-green] p-3.5 rounded-xl flex-shrink-0 border border-purple-200 dark:border-purple-800 shadow-sm"><Icon name="bot" className="w-6 h-6" /></div>
                             <div><h4 className="font-extrabold text-lg mb-2 dark:text-white">3. استعن بالمساعد</h4><p className="text-gray-600 dark:text-gray-400 text-sm font-semibold leading-relaxed">استخدم الروابط لمساعد متخصص ليعمل معك كخبير من <button onClick={()=>navigateToTab('assistants')} className="text-[--accent-green] font-bold hover:underline bg-white dark:bg-slate-800 px-1 rounded shadow-sm border border-gray-200 dark:border-slate-700">المساعدين</button>.</p></div>
                         </div>
-                        <div className="flex gap-4 items-start bg-gray-50 dark:bg-slate-900/50 p-5 rounded-xl border border-gray-200 dark:border-slate-600 shadow-sm transition-all hover:border-orange-300">
-                            <div className="bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400 p-3.5 rounded-xl flex-shrink-0 border border-orange-200 dark:border-orange-800 shadow-sm"><Icon name="hammer" className="w-6 h-6" /></div>
+                        <div className="flex gap-4 items-start bg-gray-50 dark:bg-slate-900/50 p-5 rounded-xl border-2 border-gray-200 dark:border-slate-600 shadow-sm transition-all hover:border-[--accent-green]">
+                            <div className="bg-orange-100 dark:bg-orange-900/40 text-[--accent-green] p-3.5 rounded-xl flex-shrink-0 border border-orange-200 dark:border-orange-800 shadow-sm"><Icon name="hammer" className="w-6 h-6" /></div>
                             <div><h4 className="font-extrabold text-lg mb-2 dark:text-white">4. نفذ بالأدوات</h4><p className="text-gray-600 dark:text-gray-400 text-sm font-semibold leading-relaxed">استخدم الأدوات الموصى بها أو تصفح <button onClick={()=>navigateToTab('tools')} className="text-[--accent-green] font-bold hover:underline bg-white dark:bg-slate-800 px-1 rounded shadow-sm border border-gray-200 dark:border-slate-700">بنك الأدوات</button>.</p></div>
                         </div>
                     </div>
                 </div>
 
                 {/* روابط سريعة ومجتمع الخريجين */}
-                <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-md border-2 border-gray-100 dark:border-slate-700">
+                <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-md border-2 border-[--accent-navy] dark:border-[--accent-green]">
                      <h3 className="text-xl font-extrabold mb-5 flex items-center justify-center gap-3 text-[--accent-navy] dark:text-[--text-light] border-b-2 border-gray-100 dark:border-slate-700 pb-4">
                         <div className="bg-green-50 dark:bg-slate-700 p-2 rounded-lg border border-green-200 dark:border-slate-600"><Icon name="link" className="text-[--accent-green]" /></div>
                         <span>روابط الوصول السريع</span>
                      </h3>
                      <div className="flex flex-col gap-4 px-2 sm:px-4">
-                         <a href="https://t.me/+dK5nwWbX4QszYTA0" target="_blank" className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 w-full py-4 px-5 rounded-xl flex items-center justify-center gap-4 font-bold text-lg shadow-lg text-white transition-all transform hover:scale-[1.02] border-2 border-white/20">
-                             <div className="bg-white/20 p-2 rounded-lg"><Icon name="graduation-cap" className="w-8 h-8" /></div>
+                         <a href="https://t.me/+dK5nwWbX4QszYTA0" target="_blank" className="bg-gradient-to-r from-[--accent-navy] to-[#1a2536] hover:from-[#152030] hover:to-[#0f172a] w-full py-4 px-5 rounded-xl flex items-center justify-center gap-4 font-bold text-lg shadow-lg text-white transition-all transform hover:scale-[1.02] border-2 border-[--accent-green]">
+                             <div className="bg-white/20 p-2 rounded-lg border border-[--accent-green]"><Icon name="graduation-cap" className="w-8 h-8 text-[--accent-green]" /></div>
                              <div className="flex flex-col items-start">
                                  <span className="text-xl">مجتمع خريجين Smarter With Ai</span>
-                                 <span className="text-sm font-semibold opacity-90 text-indigo-100">لعلاقة ممتدة مع الذكاء الاصطناعي</span>
+                                 <span className="text-sm font-semibold opacity-90 text-[--accent-green]">لعلاقة ممتدة مع الذكاء الاصطناعي</span>
                              </div>
                          </a>
-                         <a href="https://t.me/+D5qrN2SQSC8wNDU0" target="_blank" className="bg-gradient-to-r from-[--accent-green] to-[#7a9632] w-full py-3 px-5 rounded-xl flex items-center justify-center gap-3 font-bold text-lg shadow-md text-white transition-all transform hover:scale-[1.02] border border-green-600/30">
+                         <a href="https://t.me/+D5qrN2SQSC8wNDU0" target="_blank" className="bg-gradient-to-r from-[--accent-green] to-[#7a9632] w-full py-3 px-5 rounded-xl flex items-center justify-center gap-3 font-bold text-lg shadow-md text-white transition-all transform hover:scale-[1.02] border-2 border-[--accent-navy]">
                              <div className="bg-white/20 p-1.5 rounded-lg"><Icon name="send" className="w-6 h-6" /></div>
                              <span>مجتمع التليجرام (المناقشة العامة)</span>
                          </a>
-                         <a href="https://chat.whatsapp.com/C68FsQh5eYM7YaKAXCk9vQ" target="_blank" className="w-full py-3 px-5 rounded-xl flex items-center justify-center gap-3 font-bold text-lg shadow-md text-white bg-[#25D366] hover:bg-[#128C7E] transition-all transform hover:scale-[1.02] border border-green-800/30">
+                         <a href="https://chat.whatsapp.com/C68FsQh5eYM7YaKAXCk9vQ" target="_blank" className="w-full py-3 px-5 rounded-xl flex items-center justify-center gap-3 font-bold text-lg shadow-md text-white bg-[#25D366] hover:bg-[#128C7E] transition-all transform hover:scale-[1.02] border-2 border-green-800">
                              <div className="bg-white/20 p-1.5 rounded-lg"><Icon name="message-circle" className="w-6 h-6" /></div>
                              <span>جروب الواتساب</span>
                          </a>
@@ -604,7 +599,7 @@
 
             return (
                 <div className="space-y-6 animate-fadeIn">
-                    <div className="bg-gradient-to-r from-green-50 to-white dark:from-slate-800 dark:to-[#141c29] p-5 rounded-2xl border-2 border-green-200 dark:border-slate-700 shadow-md flex items-center gap-5">
+                    <div className="bg-gradient-to-r from-green-50 to-white dark:from-slate-800 dark:to-[#141c29] p-5 rounded-2xl border-2 border-[--accent-navy] dark:border-[--accent-green] shadow-md flex items-center gap-5">
                         <div className="bg-[--accent-green] text-white p-3 rounded-xl shadow-inner flex-shrink-0 border border-white/20">
                             <Icon name="route" className="w-8 h-8" />
                         </div>
@@ -616,7 +611,7 @@
 
                     <div className="space-y-5">
                         {workflowsData.map(wf => (
-                            <div key={wf.id} className={`nested-accordion border-2 ${openWf === wf.id ? 'border-[--accent-green] shadow-lg transform scale-[1.01]' : 'border-gray-200 dark:border-slate-700'}`}>
+                            <div key={wf.id} className={`nested-accordion border-2 ${openWf === wf.id ? 'border-[--accent-green] shadow-lg transform scale-[1.01]' : 'border-[--accent-navy] dark:border-slate-700'}`}>
                                 <button onClick={() => setOpenWf(openWf === wf.id ? null : wf.id)} className="nested-accordion-header w-full focus:outline-none" aria-expanded={openWf === wf.id}>
                                     <div className="flex items-center gap-4 text-right">
                                         <div className={`p-2.5 rounded-xl border shadow-sm transition-colors ${openWf === wf.id ? 'bg-[--accent-green] text-white border-transparent' : 'bg-gray-100 dark:bg-slate-800 text-[--accent-navy] dark:text-[--accent-green] border-gray-200 dark:border-slate-600'}`}>
@@ -629,18 +624,18 @@
                                     </div>
                                 </button>
                                 
-                                <div className="nested-accordion-content custom-scrollbar" style={{ maxHeight: openWf === wf.id ? '4000px' : '0' }}>
-                                    <div className="p-4 sm:p-6 space-y-6 bg-gray-50/50 dark:bg-[#1a2433] border-t-2 border-gray-100 dark:border-slate-700">
+                                <div className="nested-accordion-content custom-scrollbar border-t-2 border-[--accent-green]" style={{ maxHeight: openWf === wf.id ? '4000px' : '0' }}>
+                                    <div className="p-4 sm:p-6 space-y-6 bg-gray-50/50 dark:bg-[#1a2433]">
                                         
                                         {/* احتياجك */}
-                                        <div className="bg-white dark:bg-slate-800 p-5 rounded-2xl border-2 border-gray-200 dark:border-gray-700 shadow-sm">
-                                            <h5 className="font-extrabold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-3 border-b-2 border-gray-100 dark:border-slate-700 pb-3">
+                                        <div className="bg-white dark:bg-slate-800 p-5 rounded-2xl border-2 border-[--accent-navy] dark:border-gray-700 shadow-sm">
+                                            <h5 className="font-extrabold text-[--accent-navy] dark:text-gray-200 mb-4 flex items-center gap-3 border-b-2 border-gray-100 dark:border-slate-700 pb-3">
                                                 <div className="bg-gray-100 dark:bg-slate-700 p-2 rounded-lg"><Icon name="target" className="w-5 h-5 text-[--accent-green]"/></div>
                                                 حدد احتياجك:
                                             </h5>
                                             <div className="space-y-3 text-gray-700 dark:text-gray-300 text-sm sm:text-base font-bold">
                                                 {wf.needs.map((need, i) => (
-                                                    <div key={i} className="bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border border-gray-200 dark:border-slate-600 flex items-start gap-3 shadow-sm hover:border-[--accent-green]/50 transition-colors">
+                                                    <div key={i} className="bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border-2 border-gray-200 dark:border-slate-600 flex items-start gap-3 shadow-sm hover:border-[--accent-green]/50 transition-colors">
                                                         <Icon name="check-circle-2" className="w-5 h-5 text-[--accent-green] mt-0.5 flex-shrink-0" />
                                                         <span className="leading-relaxed">{need}</span>
                                                     </div>
@@ -649,25 +644,25 @@
                                         </div>
 
                                         {/* طرق التنفيذ */}
-                                        <div className="bg-white dark:bg-slate-800 p-5 rounded-2xl border-2 border-gray-200 dark:border-gray-700 shadow-sm">
-                                            <h5 className="font-extrabold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-3 border-b-2 border-gray-100 dark:border-slate-700 pb-3">
+                                        <div className="bg-white dark:bg-slate-800 p-5 rounded-2xl border-2 border-[--accent-navy] dark:border-gray-700 shadow-sm">
+                                            <h5 className="font-extrabold text-[--accent-navy] dark:text-gray-200 mb-4 flex items-center gap-3 border-b-2 border-gray-100 dark:border-slate-700 pb-3">
                                                 <div className="bg-gray-100 dark:bg-slate-700 p-2 rounded-lg"><Icon name="list" className="w-5 h-5 text-[--accent-green]"/></div>
                                                 الطرق المفصلة للتنفيذ:
                                             </h5>
                                             <div className="space-y-4 text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
                                                 {wf.methods.map((method, i) => (
-                                                    <div key={i} className="bg-gray-50 dark:bg-slate-900/50 p-5 rounded-xl border border-gray-200 dark:border-slate-600 relative overflow-hidden shadow-sm hover:border-[--accent-green]/50 transition-colors">
+                                                    <div key={i} className="bg-gray-50 dark:bg-slate-900/50 p-5 rounded-xl border-2 border-gray-200 dark:border-slate-600 relative overflow-hidden shadow-sm hover:border-[--accent-green]/50 transition-colors">
                                                         <div className="absolute top-0 right-0 w-1.5 h-full bg-gradient-to-b from-[--accent-green] to-[--accent-navy]"></div>
                                                         <h6 className="font-extrabold text-lg text-[--accent-navy] dark:text-[--accent-green] mb-3 flex items-center gap-2">
                                                             <span className="w-2 h-2 rounded-full bg-[--accent-green]"></span>
                                                             {method.title}
                                                         </h6>
-                                                        {method.text && <div className="mb-3 font-bold bg-white dark:bg-slate-800 p-3 rounded-lg border border-gray-100 dark:border-slate-700" dangerouslySetInnerHTML={{ __html: method.text }}></div>}
+                                                        {method.text && <div className="mb-3 font-bold bg-white dark:bg-slate-800 p-3 rounded-lg border border-gray-200 dark:border-slate-700" dangerouslySetInnerHTML={{ __html: method.text }}></div>}
                                                         {method.steps && (
                                                             <div className="mt-4 pt-4 border-t-2 border-gray-200 dark:border-slate-700">
                                                                 <ul className="space-y-3">
                                                                     {method.steps.map((step, j) => (
-                                                                        <li key={j} className="flex items-start gap-3 bg-white dark:bg-slate-800 p-3 rounded-xl border border-gray-100 dark:border-slate-700 shadow-sm">
+                                                                        <li key={j} className="flex items-start gap-3 bg-white dark:bg-slate-800 p-3 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm">
                                                                             <span className="bg-green-100 dark:bg-green-900/40 text-[--accent-green] font-extrabold w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 text-sm mt-0.5 border border-green-200 dark:border-green-800">{j+1}</span>
                                                                             <span className="font-bold pt-0.5">{step}</span>
                                                                         </li>
@@ -681,24 +676,24 @@
                                         </div>
 
                                         {/* الأدوات */}
-                                        <div className="bg-blue-50 dark:bg-slate-800/80 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-5 border-2 border-blue-200 dark:border-slate-600 shadow-sm relative overflow-hidden">
+                                        <div className="bg-blue-50 dark:bg-slate-800/80 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-5 border-2 border-[--accent-navy] dark:border-[--accent-green] shadow-sm relative overflow-hidden">
                                             <div className="absolute -left-4 -bottom-4 w-24 h-24 bg-blue-500 opacity-5 rounded-full blur-2xl"></div>
                                             <div className="flex flex-col sm:flex-row items-start sm:items-center flex-wrap gap-5 w-full justify-between relative z-10">
                                                  <div className="flex items-start sm:items-center gap-4 flex-col sm:flex-row">
                                                      <div className="flex items-center gap-3">
-                                                         <div className="bg-blue-100 dark:bg-slate-700 p-2.5 rounded-xl border border-blue-200 dark:border-slate-500 shadow-sm"><Icon name="wrench" className="w-6 h-6 text-blue-600 dark:text-blue-400" /></div>
-                                                         <span className="font-extrabold text-lg text-blue-900 dark:text-blue-300">الأدوات المدمجة:</span>
+                                                         <div className="bg-white dark:bg-slate-700 p-2.5 rounded-xl border-2 border-[--accent-navy] dark:border-[--accent-green] shadow-sm"><Icon name="wrench" className="w-6 h-6 text-[--accent-navy] dark:text-[--accent-green]" /></div>
+                                                         <span className="font-extrabold text-lg text-[--accent-navy] dark:text-gray-200">الأدوات المدمجة:</span>
                                                      </div>
                                                      <div className="flex flex-wrap gap-2">
                                                          {wf.toolsList.map((t, idx) => (
-                                                             <span key={idx} className="bg-white dark:bg-slate-900 border border-blue-200 dark:border-slate-500 px-4 py-1.5 rounded-lg text-sm font-extrabold text-gray-700 dark:text-gray-200 shadow-sm flex items-center gap-1.5">
-                                                                 <div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div>{t}
+                                                             <span key={idx} className="bg-white dark:bg-slate-900 border-2 border-[--accent-green]/50 px-4 py-1.5 rounded-lg text-sm font-extrabold text-[--accent-navy] dark:text-gray-200 shadow-sm flex items-center gap-1.5">
+                                                                 <div className="w-1.5 h-1.5 rounded-full bg-[--accent-green]"></div>{t}
                                                              </span>
                                                          ))}
                                                      </div>
                                                  </div>
                                                  {wf.targetCategory && (
-                                                     <button onClick={() => navigateToTab('tools', wf.targetCategory)} className="bg-blue-600 text-white text-sm font-extrabold px-6 py-3 rounded-xl flex items-center justify-center gap-2 whitespace-nowrap hover:bg-blue-700 transition-all transform hover:scale-105 shadow-md border border-blue-400">
+                                                     <button onClick={() => navigateToTab('tools', wf.targetCategory)} className="bg-[--accent-navy] text-white text-sm font-extrabold px-6 py-3 rounded-xl flex items-center justify-center gap-2 whitespace-nowrap hover:bg-[#152030] transition-all transform hover:scale-105 shadow-md border-2 border-[--accent-green]">
                                                          <span>تصفح ({wf.targetCategory})</span>
                                                          <div className="bg-white/20 p-1 rounded"><Icon name="arrow-left" className="w-4 h-4"/></div>
                                                      </button>
@@ -708,26 +703,26 @@
 
                                         {/* المساعدون */}
                                         {wf.assistantsGroups && wf.assistantsGroups.length > 0 && (
-                                            <div className="bg-purple-50 dark:bg-slate-800/80 rounded-2xl p-6 border-2 border-purple-200 dark:border-slate-600 shadow-sm relative overflow-hidden">
-                                                 <div className="absolute -left-4 -top-4 w-24 h-24 bg-purple-500 opacity-5 rounded-full blur-2xl"></div>
+                                            <div className="bg-gray-50 dark:bg-slate-800/80 rounded-2xl p-6 border-2 border-[--accent-navy] dark:border-[--accent-green] shadow-sm relative overflow-hidden">
+                                                 <div className="absolute -left-4 -top-4 w-24 h-24 bg-[--accent-green] opacity-5 rounded-full blur-2xl"></div>
                                                  <div className="relative z-10">
-                                                     <h5 className="font-extrabold text-purple-900 dark:text-purple-300 mb-5 flex items-center gap-3 border-b-2 border-purple-200 dark:border-slate-600 pb-3 text-lg">
-                                                         <div className="bg-purple-100 dark:bg-slate-700 p-2.5 rounded-xl border border-purple-200 dark:border-slate-500 shadow-sm"><Icon name="bot" className="w-6 h-6 text-purple-600 dark:text-purple-400"/></div>
+                                                     <h5 className="font-extrabold text-[--accent-navy] dark:text-gray-200 mb-5 flex items-center gap-3 border-b-2 border-gray-200 dark:border-slate-600 pb-3 text-lg">
+                                                         <div className="bg-white dark:bg-slate-700 p-2.5 rounded-xl border-2 border-[--accent-navy] dark:border-[--accent-green] shadow-sm"><Icon name="bot" className="w-6 h-6 text-[--accent-navy] dark:text-[--accent-green]"/></div>
                                                          المساعدون المخصصون (GPTs):
                                                      </h5>
                                                      <div className="space-y-4">
                                                          {wf.assistantsGroups.map((group, i) => (
-                                                             <div key={i} className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-purple-200 dark:border-slate-600 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-purple-300 transition-colors">
-                                                                 <div className="flex items-center gap-3 text-sm sm:text-base font-extrabold text-gray-800 dark:text-gray-200">
-                                                                     <div className="bg-purple-100 dark:bg-slate-800 p-1.5 rounded-lg border border-purple-200 dark:border-slate-700"><Icon name="user" className="w-5 h-5 text-purple-500" /></div>
+                                                             <div key={i} className="bg-white dark:bg-slate-900 p-5 rounded-xl border-2 border-gray-200 dark:border-slate-600 shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-4 hover:border-[--accent-green] transition-colors">
+                                                                 <div className="flex items-center gap-3 text-base font-extrabold text-[--accent-navy] dark:text-gray-200">
+                                                                     <div className="bg-green-50 dark:bg-slate-800 p-1.5 rounded-lg border border-[--accent-green]/50"><Icon name="user" className="w-5 h-5 text-[--accent-green]" /></div>
                                                                      <span>{group.title}</span>
                                                                  </div>
-                                                                 <div className="flex flex-wrap items-center gap-3">
+                                                                 <div className="flex flex-col sm:flex-row flex-wrap w-full xl:w-auto gap-3">
                                                                      {group.links.map((link, j) => (
-                                                                         <a key={j} href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2.5 text-sm font-extrabold text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-slate-800 border border-purple-200 dark:border-slate-600 rounded-xl hover:bg-purple-100 dark:hover:bg-slate-700 transition-all shadow-sm group">
+                                                                         <a key={j} href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between w-full sm:flex-1 xl:w-auto gap-3 px-5 py-3 text-base font-extrabold text-[--accent-navy] dark:text-white bg-gray-50 dark:bg-slate-800 border-2 border-[--accent-green] rounded-xl hover:bg-[--accent-green] hover:text-white dark:hover:bg-[--accent-green] transition-all shadow-sm group">
                                                                              <span>{link.name}</span>
-                                                                             <div className="bg-white dark:bg-slate-700 p-1 rounded-md border border-purple-100 dark:border-slate-500 group-hover:bg-purple-200 dark:group-hover:bg-slate-600 transition-colors">
-                                                                                 <Icon name="external-link" className="w-3 h-3" />
+                                                                             <div className="bg-white dark:bg-slate-900 p-1.5 rounded-lg border border-[--accent-green] group-hover:border-transparent group-hover:bg-white/20 transition-colors">
+                                                                                 <Icon name="external-link" className="w-4 h-4" />
                                                                              </div>
                                                                          </a>
                                                                      ))}
@@ -764,8 +759,8 @@
 
         const AssistantsTab = () => (
             <div className="space-y-6 animate-fadeIn">
-                <div className="bg-gradient-to-r from-purple-50 to-white dark:from-slate-800 dark:to-[#141c29] p-5 rounded-2xl border-2 border-purple-200 dark:border-slate-700 shadow-md flex items-center gap-5">
-                    <div className="bg-purple-600 text-white p-3 rounded-xl shadow-inner flex-shrink-0 border border-white/20">
+                <div className="bg-gradient-to-r from-gray-50 to-white dark:from-slate-800 dark:to-[#141c29] p-5 rounded-2xl border-2 border-[--accent-navy] dark:border-[--accent-green] shadow-md flex items-center gap-5">
+                    <div className="bg-[--accent-navy] text-white p-3 rounded-xl shadow-inner flex-shrink-0 border border-white/20">
                         <Icon name="bot" className="w-8 h-8" />
                     </div>
                     <div>
@@ -775,35 +770,37 @@
                 </div>
 
                 <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-6">
-                    {assistantsData.map((cat, idx) => (
-                        <div key={idx} className="bg-white dark:bg-[#1a2433] rounded-2xl shadow-md border-2 border-gray-200 dark:border-slate-700 overflow-hidden flex flex-col">
+                    {assistantsData.map((cat, idx) => {
+                        const isExclusive = cat.category.includes("الحصريون");
+                        return (
+                        <div key={idx} className={`bg-white dark:bg-[#1a2433] rounded-2xl shadow-md border-2 overflow-hidden flex flex-col ${isExclusive ? 'border-[--accent-green]' : 'border-[--accent-navy]'}`}>
                             <div className="bg-gray-50 dark:bg-slate-800 p-5 border-b-2 border-gray-200 dark:border-slate-700 flex flex-col gap-2">
                                 <div className="flex items-center gap-3">
-                                    <div className="bg-purple-100 dark:bg-slate-700 p-2.5 rounded-xl border border-purple-200 dark:border-slate-600 shadow-sm">
-                                        <Icon name={cat.icon} className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                                    <div className={`p-2.5 rounded-xl border shadow-sm ${isExclusive ? 'bg-green-100 dark:bg-slate-700 border-[--accent-green]' : 'bg-blue-100 dark:bg-slate-700 border-[--accent-navy]'}`}>
+                                        <Icon name={cat.icon} className={`w-6 h-6 ${isExclusive ? 'text-[--accent-green]' : 'text-[--accent-navy]'}`} />
                                     </div>
-                                    <h3 className="font-extrabold text-xl text-gray-800 dark:text-gray-100">{cat.category}</h3>
+                                    <h3 className="font-extrabold text-xl text-[--accent-navy] dark:text-gray-100">{cat.category}</h3>
                                 </div>
                                 {cat.desc && <p className="text-sm font-bold text-gray-600 dark:text-gray-400 mr-14">{cat.desc}</p>}
                             </div>
                             <div className="p-5 space-y-4 flex-grow bg-gray-50/30 dark:bg-[#1a2433]">
                                 {cat.items.map((item, i) => (
-                                    <div key={i} className="flex flex-col p-5 rounded-2xl border-2 border-gray-200 dark:border-slate-600 hover:border-purple-400 dark:hover:border-purple-500 bg-white dark:bg-slate-800 transition-all group gap-4 shadow-sm hover:shadow-md">
+                                    <div key={i} className="flex flex-col p-5 rounded-2xl border-2 border-gray-200 dark:border-slate-600 hover:border-[--accent-green] dark:hover:border-[--accent-green] bg-white dark:bg-slate-800 transition-all group gap-4 shadow-sm hover:shadow-md">
                                         <div className="flex items-start gap-4">
-                                            <div className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 p-2.5 rounded-xl mt-1 shadow-sm group-hover:bg-purple-50 dark:group-hover:bg-slate-600 transition-colors">
-                                                <Icon name="sparkles" className="w-5 h-5 text-purple-500 dark:text-purple-400 group-hover:text-purple-600 transition-colors" />
+                                            <div className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 p-2.5 rounded-xl mt-1 shadow-sm group-hover:bg-green-50 dark:group-hover:bg-slate-600 transition-colors">
+                                                <Icon name="sparkles" className="w-5 h-5 text-[--accent-navy] dark:text-gray-300 group-hover:text-[--accent-green] transition-colors" />
                                             </div>
                                             <div className="pt-1">
-                                                <h4 className="font-extrabold text-gray-800 dark:text-gray-200 text-lg group-hover:text-purple-700 dark:group-hover:text-purple-400 transition-colors">{item.name}</h4>
+                                                <h4 className="font-extrabold text-[--accent-navy] dark:text-gray-200 text-lg group-hover:text-[--accent-green] transition-colors">{item.name}</h4>
                                                 {item.desc && <p className="text-sm font-bold text-gray-600 dark:text-gray-400 mt-2 leading-relaxed">{item.desc}</p>}
                                             </div>
                                         </div>
-                                        <div className="flex flex-wrap gap-3 mt-1 mr-14 pt-4 border-t-2 border-gray-100 dark:border-slate-700">
+                                        <div className="flex flex-col sm:flex-row flex-wrap w-full gap-3 mt-4 pt-4 border-t-2 border-gray-100 dark:border-slate-700">
                                             {item.links.map((link, j) => (
-                                                <a key={j} href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2.5 bg-purple-50 dark:bg-slate-900 border border-purple-200 dark:border-slate-600 text-purple-700 dark:text-purple-300 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-500 dark:hover:text-white rounded-xl text-sm font-extrabold transition-all shadow-sm group/btn">
+                                                <a key={j} href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between w-full sm:flex-1 gap-3 px-5 py-3 bg-gray-50 dark:bg-slate-900 border-2 border-[--accent-green] text-[--accent-navy] dark:text-white hover:bg-[--accent-green] hover:text-white dark:hover:bg-[--accent-green] rounded-xl text-base font-extrabold transition-all shadow-sm group/btn">
                                                     <span>{link.name}</span>
-                                                    <div className="bg-white dark:bg-slate-800 p-1 rounded-md border border-purple-200 dark:border-slate-600 group-hover/btn:border-transparent group-hover/btn:bg-white/20 transition-colors">
-                                                        <Icon name="external-link" className="w-3.5 h-3.5" />
+                                                    <div className="bg-white dark:bg-slate-800 p-1.5 rounded-lg border border-[--accent-green] group-hover/btn:border-transparent group-hover/btn:bg-white/20 transition-colors">
+                                                        <Icon name="external-link" className="w-4 h-4" />
                                                     </div>
                                                 </a>
                                             ))}
@@ -812,7 +809,7 @@
                                 ))}
                             </div>
                         </div>
-                    ))}
+                    )})}
                 </div>
             </div>
         );
@@ -836,8 +833,8 @@
 
             return (
                 <div className="space-y-6 animate-fadeIn">
-                    <div className="bg-gradient-to-r from-blue-50 to-white dark:from-slate-800 dark:to-[#141c29] p-5 rounded-2xl border-2 border-blue-200 dark:border-slate-700 shadow-md flex items-center gap-5">
-                        <div className="bg-blue-600 text-white p-3 rounded-xl shadow-inner flex-shrink-0 border border-white/20">
+                    <div className="bg-gradient-to-r from-gray-50 to-white dark:from-slate-800 dark:to-[#141c29] p-5 rounded-2xl border-2 border-[--accent-navy] dark:border-[--accent-green] shadow-md flex items-center gap-5">
+                        <div className="bg-[--accent-navy] text-white p-3 rounded-xl shadow-inner flex-shrink-0 border border-white/20">
                             <Icon name="wrench" className="w-8 h-8" />
                         </div>
                         <div>
@@ -851,29 +848,29 @@
                             const isOpen = openTool === category.title;
                             const categoryId = `tool-category-${category.title.replace(/\s+/g, '-')}`;
                             return (
-                                <div key={idx} id={categoryId} className={`bg-white dark:bg-[#1a2433] rounded-2xl shadow-md border-2 ${isOpen ? 'border-blue-400 dark:border-blue-500 transform scale-[1.01]' : 'border-gray-200 dark:border-slate-700'} transition-all overflow-hidden`}>
+                                <div key={idx} id={categoryId} className={`bg-white dark:bg-[#1a2433] rounded-2xl shadow-md border-2 border-[--accent-navy] dark:border-[--accent-green] ${isOpen ? 'transform scale-[1.01]' : ''} transition-all overflow-hidden`}>
                                     <button onClick={() => setOpenTool(isOpen ? null : category.title)} className="w-full p-5 flex items-center justify-between text-right hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors focus:outline-none">
                                         <div className="flex items-center gap-4">
-                                            <div className={`p-3 rounded-xl border-2 transition-colors shadow-sm ${isOpen ? 'bg-blue-100 dark:bg-slate-700 border-blue-200 dark:border-slate-600 text-blue-600 dark:text-blue-400' : 'bg-gray-50 dark:bg-slate-800 border-gray-200 dark:border-slate-600 text-gray-600 dark:text-gray-400'}`}>
+                                            <div className={`p-3 rounded-xl border-2 transition-colors shadow-sm ${isOpen ? 'bg-[--accent-navy] border-[--accent-navy] text-white dark:bg-[--accent-green] dark:border-[--accent-green] dark:text-[--accent-navy]' : 'bg-gray-50 dark:bg-slate-800 border-gray-200 dark:border-slate-600 text-[--accent-navy] dark:text-gray-400'}`}>
                                                 <Icon name={category.icon} className="w-6 h-6" />
                                             </div>
-                                            <span className="font-extrabold text-xl text-gray-800 dark:text-gray-100">{category.title}</span>
+                                            <span className="font-extrabold text-xl text-[--accent-navy] dark:text-gray-100">{category.title}</span>
                                         </div>
-                                        <div className={`p-2 rounded-lg transition-colors ${isOpen ? 'bg-blue-50 dark:bg-slate-700 border border-blue-200 dark:border-slate-600' : ''}`}>
-                                            <Icon name="chevron-down" className={`w-5 h-5 transition-transform duration-300 ${isOpen ? 'rotate-180 text-blue-500' : 'text-gray-400'}`} />
+                                        <div className={`p-2 rounded-lg transition-colors ${isOpen ? 'bg-gray-100 dark:bg-slate-700 border border-gray-200 dark:border-slate-600' : ''}`}>
+                                            <Icon name="chevron-down" className={`w-5 h-5 transition-transform duration-300 ${isOpen ? 'rotate-180 text-[--accent-navy] dark:text-[--accent-green]' : 'text-gray-400'}`} />
                                         </div>
                                     </button>
-                                    <div className="accordion-content custom-scrollbar" style={{ maxHeight: isOpen ? '1500px' : '0' }}>
-                                        <div className="p-5 pt-0 border-t-2 border-gray-100 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800/30">
-                                            <div className="grid grid-cols-1 gap-3 mt-5">
+                                    <div className="accordion-content custom-scrollbar border-t-2 border-[--accent-navy] dark:border-[--accent-green]" style={{ maxHeight: isOpen ? '1500px' : '0' }}>
+                                        <div className="p-5 space-y-4 bg-gray-50/50 dark:bg-slate-800/30">
+                                            <div className="grid grid-cols-1 gap-4 mt-2">
                                                 {category.tools.map((tool, tIdx) => (
-                                                    <a key={tIdx} href={tool.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between p-4 rounded-xl bg-white dark:bg-slate-800 border-2 border-gray-100 dark:border-slate-600 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition-all group">
+                                                    <a key={tIdx} href={tool.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between p-4 rounded-xl bg-white dark:bg-slate-800 border-2 border-[--accent-green]/50 hover:border-[--accent-green] hover:shadow-md transition-all group">
                                                         <div className="flex items-center gap-3">
-                                                            <div className="w-2.5 h-2.5 rounded-full bg-blue-400 group-hover:bg-blue-600 group-hover:scale-150 transition-all shadow-sm"></div>
-                                                            <span className="font-extrabold text-sm sm:text-base text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{tool.name}</span>
+                                                            <div className="w-2.5 h-2.5 rounded-full bg-[--accent-navy] group-hover:bg-[--accent-green] group-hover:scale-150 transition-all shadow-sm"></div>
+                                                            <span className="font-extrabold text-base sm:text-lg text-[--accent-navy] dark:text-gray-200 group-hover:text-[--accent-green] transition-colors">{tool.name}</span>
                                                         </div>
-                                                        <div className="bg-gray-50 dark:bg-slate-700 p-2.5 rounded-lg group-hover:bg-blue-50 dark:group-hover:bg-slate-600 transition-colors border border-gray-200 dark:border-slate-500 shadow-sm">
-                                                            <Icon name="external-link" className="w-4 h-4 text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" />
+                                                        <div className="bg-gray-50 dark:bg-slate-700 p-2.5 rounded-lg group-hover:bg-[--accent-green] transition-colors border border-gray-200 dark:border-slate-500 shadow-sm">
+                                                            <Icon name="external-link" className="w-5 h-5 text-gray-500 group-hover:text-white transition-colors" />
                                                         </div>
                                                     </a>
                                                 ))}
@@ -907,12 +904,12 @@
             return (
                 <div className="space-y-6 animate-fadeIn">
                     <Reminder>رسالة شكر: رحلتنا معكم ممتعة، وبكم نكبر ونتطور. رأيك يساهم في تحسين الدبلومة، ودعوتك لأصدقائك توسّع مجتمعنا. هدفنا أن نصبح جميعًا Smarter With AI.</Reminder>
+                    
                     <div className="space-y-4">
-                        
                         <Accordion title="ترشيحاتي الخاصة" isOpen={openAccordion === "recommendations"} onToggle={() => handleToggle("recommendations")}>
                             <div className="space-y-4">
                                 <NestedAccordion title="التصميم (Canva) والمونتاج (Capcut)" icon="video" isOpen={openNestedAccordion === "design"} onToggle={() => handleNestedToggle("design")}>
-                                    <div className="space-y-3">
+                                    <div className="space-y-4">
                                         <RecommendationLink href="https://t.me/HMcpa" icon="video" title="هشام مصطفي أكاديمي (دبلومات مدفوعة)" description="ميزة الدبلومة: سعر قليل، شامل، جروب متابعة وفيدباك." />
                                         <div className="p-4 bg-gray-50 dark:bg-slate-800 border-2 border-gray-200 dark:border-slate-700 rounded-xl shadow-sm"><span className="font-extrabold flex items-center gap-2"><Icon name="youtube" className="w-5 h-5" /> لو عاوز حاجة مجانية (يوتيوب):</span></div>
                                         <RecommendationLink href="https://youtube.com/playlist?list=PLsO4nF1GHw-NRT6LoFtGm_V57wjk_nncS&si=9Oh0TcO8ViTiJ2jC" icon="play-circle" title="دبلومة كانفا مجانية علي اليوتيوب" />
@@ -921,7 +918,7 @@
                                     </div>
                                 </NestedAccordion>
                                 <NestedAccordion title="كتابة محتوى (Content Writing)" icon="book-copy" isOpen={openNestedAccordion === "content"} onToggle={() => handleNestedToggle("content")}>
-                                    <div className="space-y-3">
+                                    <div className="space-y-4">
                                         <RecommendationLink href="https://www.facebook.com/share/p/1EfMGRNcqa/" icon="book-copy" title="ترشيحات مجانية ومدفوعة" description="بوست شامل لأفضل مصادر تعلم كتابة المحتوى" />
                                         <div className="p-6 bg-green-50 dark:bg-slate-800 border-2 border-green-200 dark:border-slate-700 rounded-2xl shadow-sm relative overflow-hidden">
                                             <div className="absolute top-0 right-0 w-1.5 h-full bg-gradient-to-b from-[--accent-green] to-[--accent-navy]"></div>
@@ -929,29 +926,29 @@
                                             <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 mb-5 leading-relaxed font-bold bg-white dark:bg-slate-900 p-4 rounded-xl border border-gray-200 dark:border-slate-600 shadow-sm">
                                                 متاح حالياً خصم <span className="font-extrabold text-[--accent-navy] dark:text-white mx-1 text-lg">10%</span>.<br/>استخدم الكود الخاص: <span className="font-mono font-extrabold bg-green-100 dark:bg-green-900/30 text-[--accent-green] px-3 py-1 rounded-lg border border-green-200 dark:border-green-800 select-all mx-2 text-lg inline-block my-2 shadow-sm">MH10</span><br/><span className="text-xs font-semibold text-gray-500 dark:text-gray-400 block mt-2">* الكود متفعّل لمدة 3 شهور على جميع دبلومات OnTrack.</span>
                                             </p>
-                                            <a href="https://www.facebook.com/ontrack610/" target="_blank" rel="noopener noreferrer" className="text-sm bg-[--accent-navy] hover:bg-[#152030] text-white px-6 py-3 rounded-xl inline-flex items-center gap-2 transition-all shadow-md font-bold">
-                                                <span>زيارة صفحة OnTrack</span><Icon name="external-link" className="w-4 h-4" />
+                                            <a href="https://www.facebook.com/ontrack610/" target="_blank" rel="noopener noreferrer" className="text-base bg-[--accent-navy] hover:bg-[#152030] text-white px-6 py-3 rounded-xl inline-flex items-center gap-2 transition-all shadow-md font-bold">
+                                                <span>زيارة صفحة OnTrack</span><Icon name="external-link" className="w-5 h-5" />
                                             </a>
                                         </div>
                                     </div>
                                 </NestedAccordion>
                                 <NestedAccordion title="ميديا باينج (إعلانات ممولة)" icon="dollar-sign" isOpen={openNestedAccordion === "media"} onToggle={() => handleNestedToggle("media")}>
-                                    <div className="space-y-3">
+                                    <div className="space-y-4">
                                         <RecommendationLink href="https://www.facebook.com/share/p/19uhZmBKuu/" icon="dollar-sign" title="افضل الدبلومات المتاحة" description="بوست يجمع أفضل دبلومات الإعلانات الممولة" />
                                     </div>
                                 </NestedAccordion>
                                 <NestedAccordion title="Digital Marketing" icon="briefcase" isOpen={openNestedAccordion === "marketing"} onToggle={() => handleNestedToggle("marketing")}>
-                                    <div className="space-y-3">
+                                    <div className="space-y-4">
                                         <RecommendationLink href="https://t.me/matrixmena/1000" icon="briefcase" title="Digital marketing workshop" description="ورشة عمل في التسويق الرقمي" />
                                         <RecommendationLink href="https://youtube.com/playlist?list=PLxe78bIBB8nVGSQbYw6MLKfWuNQmnjKdh&si=7s5NGI-gn7CVgqT-" icon="youtube" title="دبلومة التسويق الالكتروني بمساعدة الذكاء الاصطناعي" />
                                     </div>
                                 </NestedAccordion>
                                 <NestedAccordion title="لتعلم الأتمتة (Automation)" icon="repeat" isOpen={openNestedAccordion === "automation"} onToggle={() => handleNestedToggle("automation")}>
-                                    <div className="space-y-3">
+                                    <div className="space-y-4">
                                         <RecommendationLink href="https://youtu.be/9bMy9C8wIyg?si=WuUN5xmThiWDfgvO" icon="play-circle" title="مقدمة عن الأتمتة (فيديو)" />
                                         <RecommendationLink href="https://www.facebook.com/share/p/1B7G57H4KS/" icon="file-text" title="الأتمتة وأنواعها وخارطة الطريق" />
                                         <RecommendationLink href="https://www.facebook.com/share/p/17aTwCbtsA/" icon="map" title="خارطة الطريق لتعلمها" />
-                                        <div className="p-4 bg-gray-50 dark:bg-slate-800 border-2 border-gray-200 dark:border-slate-700 rounded-xl shadow-sm"><div className="flex items-center gap-3"><Icon name="list-checks" className="w-6 h-6 text-[--accent-green] flex-shrink-0" /><span className="flex-grow font-extrabold text-gray-800 dark:text-gray-200 text-lg">أفضل مصادر مجانية لتعلم n8n (بدون برمجة):</span></div></div>
+                                        <div className="p-4 bg-gray-50 dark:bg-slate-800 border-2 border-gray-200 dark:border-slate-700 rounded-xl shadow-sm"><div className="flex items-center gap-3"><Icon name="list-checks" className="w-6 h-6 text-[--accent-green] flex-shrink-0" /><span className="flex-grow font-extrabold text-[--accent-navy] dark:text-gray-200 text-lg">أفضل مصادر مجانية لتعلم n8n (بدون برمجة):</span></div></div>
                                         <RecommendationLink href="https://youtube.com/playlist?list=PLLHIYYlcgk6KN58UnPm8q1btNHLDJlYto&si=DFh8wDJR0dyBD1mT" icon="youtube" title="n8n with Karim (Playlist)" />
                                         <RecommendationLink href="https://youtube.com/playlist?list=PLZ42ZUInDWC79Bw1K_tYQhUPfFRV7fy8v&si=YAq1RH85DUo7l-Ak" icon="youtube" title="احترف Agentic AI Engineering (Playlist)" />
                                     </div>
@@ -963,13 +960,13 @@
                             <div className="space-y-4">
                                 <NestedAccordion title="أفضل صفحات لمتابعة محتوى AI" icon="users" isOpen={openNestedAccordion === "follow"} onToggle={() => handleNestedToggle("follow")}>
                                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                        <a href="https://drive.google.com/file/d/1qeKaJ8vr8gmBNCR-QLTmLgqXJPcKhFcs/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-3 p-5 rounded-2xl border-2 border-gray-200 dark:border-slate-600 hover:border-red-400 hover:shadow-md transition-all bg-white dark:bg-slate-800 group"><div className="bg-red-50 dark:bg-red-900/30 p-3 rounded-full group-hover:scale-110 transition-transform"><Icon name="youtube" className="w-8 h-8 text-red-600" /></div><span className="font-extrabold text-lg">يوتيوب</span></a>
-                                        <a href="https://drive.google.com/file/d/1dtRwvwG4B3SqlFgEBxD1zLM8iRWlE8vX/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-3 p-5 rounded-2xl border-2 border-gray-200 dark:border-slate-600 hover:border-blue-500 hover:shadow-md transition-all bg-white dark:bg-slate-800 group"><div className="bg-blue-50 dark:bg-blue-900/30 p-3 rounded-full group-hover:scale-110 transition-transform"><Icon name="facebook" className="w-8 h-8 text-blue-600" /></div><span className="font-extrabold text-lg">فيسبوك</span></a>
-                                        <a href="https://drive.google.com/file/d/1lOOh_34fP9g8lsiYQtS8WGm1j59evVil/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-3 p-5 rounded-2xl border-2 border-gray-200 dark:border-slate-600 hover:border-blue-400 hover:shadow-md transition-all bg-white dark:bg-slate-800 group"><div className="bg-blue-50 dark:bg-blue-900/30 p-3 rounded-full group-hover:scale-110 transition-transform"><Icon name="twitter" className="w-8 h-8 text-blue-400" /></div><span className="font-extrabold text-lg">تويتر (X)</span></a>
+                                        <a href="https://drive.google.com/file/d/1qeKaJ8vr8gmBNCR-QLTmLgqXJPcKhFcs/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-3 p-5 rounded-2xl border-2 border-gray-200 dark:border-slate-600 hover:border-[--accent-green] hover:shadow-md transition-all bg-white dark:bg-slate-800 group"><div className="bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 p-3 rounded-full group-hover:scale-110 transition-transform"><Icon name="youtube" className="w-8 h-8 text-[--accent-green]" /></div><span className="font-extrabold text-lg text-[--accent-navy] dark:text-white">يوتيوب</span></a>
+                                        <a href="https://drive.google.com/file/d/1dtRwvwG4B3SqlFgEBxD1zLM8iRWlE8vX/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-3 p-5 rounded-2xl border-2 border-gray-200 dark:border-slate-600 hover:border-[--accent-green] hover:shadow-md transition-all bg-white dark:bg-slate-800 group"><div className="bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 p-3 rounded-full group-hover:scale-110 transition-transform"><Icon name="facebook" className="w-8 h-8 text-[--accent-green]" /></div><span className="font-extrabold text-lg text-[--accent-navy] dark:text-white">فيسبوك</span></a>
+                                        <a href="https://drive.google.com/file/d/1lOOh_34fP9g8lsiYQtS8WGm1j59evVil/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-3 p-5 rounded-2xl border-2 border-gray-200 dark:border-slate-600 hover:border-[--accent-green] hover:shadow-md transition-all bg-white dark:bg-slate-800 group"><div className="bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 p-3 rounded-full group-hover:scale-110 transition-transform"><Icon name="twitter" className="w-8 h-8 text-[--accent-green]" /></div><span className="font-extrabold text-lg text-[--accent-navy] dark:text-white">تويتر (X)</span></a>
                                     </div>
                                 </NestedAccordion>
                                 <NestedAccordion title="بودكاست عن الذكاء الاصطناعي" icon="podcast" isOpen={openNestedAccordion === "podcast"} onToggle={() => handleNestedToggle("podcast")}>
-                                    <div className="space-y-3">
+                                    <div className="space-y-4">
                                         <RecommendationLink href="https://youtu.be/7WvKcFsAj6E?si=R0CQAof252pcSUtx" icon="podcast" title="بودكاست محمد جودت عن حقيقة الـ AI" description="بتكلمك عن الذكاء الاصطناعي ،، ايه هو ،، بدأ ازاي ،،اللي وصلناله ،، رايحين لفين..." />
                                         <RecommendationLink href="https://youtu.be/UsODl3Ay0CM?si=ZXGslETVO7EZ-YLP" icon="podcast" title="بودكاست تطور الذكاء الاصطناعي واغتنام الفرص" />
                                         <RecommendationLink href="https://youtu.be/WjpPDYibONU?si=dN-7w9To4yaKKUxX" icon="podcast" title="دور العرب في طفرة الذكاء الاصطناعي" />
@@ -981,13 +978,13 @@
                         <Accordion title="تغذية بصرية (Visual Inspiration)" isOpen={openAccordion === "visual_inspiration"} onToggle={() => handleToggle("visual_inspiration")}>
                             <div className="space-y-4">
                                 <NestedAccordion title="عامة (General)" icon="image" isOpen={openNestedAccordion === "visual_general"} onToggle={() => handleNestedToggle("visual_general")}>
-                                    <div className="space-y-3">
+                                    <div className="space-y-4">
                                         <RecommendationLink href="https://www.pinterest.com/" icon="image" title="Pinterest" />
                                         <RecommendationLink href="https://www.behance.net/" icon="image" title="Behance" />
                                     </div>
                                 </NestedAccordion>
                                 <NestedAccordion title="الصفحات المقصودة (Landing Pages)" icon="layout-template" isOpen={openNestedAccordion === "visual_landing"} onToggle={() => handleNestedToggle("visual_landing")}>
-                                    <div className="space-y-3">
+                                    <div className="space-y-4">
                                         <RecommendationLink href="https://dribbble.com/search/landing-page" icon="layout-template" title="Dribbble (Landing Pages)" />
                                         <RecommendationLink href="https://www.landingfolio.com/" icon="layout-template" title="Landingfolio" />
                                         <RecommendationLink href="https://www.landing.gallery/" icon="layout-template" title="Landing Gallery" />
@@ -998,7 +995,7 @@
 
                         <Accordion title="تحميل فيديوهات من وسائل التواصل" isOpen={openAccordion === "video_downloaders"} onToggle={() => handleToggle("video_downloaders")}>
                             <div className="space-y-4">
-                                <div className="space-y-3">
+                                <div className="space-y-4">
                                     <RecommendationLink href="https://ssyoutube.is/en1/" icon="download" title="ssYouTube (YouTube)" />
                                     <RecommendationLink href="https://cobalt.tools/" icon="download" title="Cobalt.tools (Facebook)" />
                                     <RecommendationLink href="https://snapinsta.to/en2" icon="download" title="Snapinsta (Instagram)" />
@@ -1007,7 +1004,7 @@
                                     <RecommendationLink href="https://klickpin.com/" icon="download" title="Klickpin (Pinterest)" />
                                 </div>
                                 <NestedAccordion title="إضافة للمتصفح لتحميل الفيديوهات" icon="puzzle" isOpen={openNestedAccordion === "video_downloader_ext"} onToggle={() => handleNestedToggle("video_downloader_ext")}>
-                                    <div className="space-y-3">
+                                    <div className="space-y-4">
                                         <RecommendationLink href="https://chromewebstore.google.com/detail/video-downloader-global-v/olafhgbhkkgkbbonieapkchffalihpic" icon="puzzle" title="Video Downloader Global" description="إضافة للمتصفح لتحميل الفيديوهات من أي موقع بسهولة." />
                                     </div>
                                 </NestedAccordion>
@@ -1021,28 +1018,28 @@
                             <Icon name="share-2" className="w-12 h-12 text-[--accent-green]" />
                         </div>
                         <h2 className="page-title text-2xl sm:text-3xl font-extrabold text-center my-4">شارك التطبيق مع أحبابك!</h2>
-                        <p className="text-gray-700 dark:text-gray-300 font-bold mb-6 leading-relaxed bg-gray-50 dark:bg-slate-800/50 p-4 rounded-xl border border-gray-200 dark:border-slate-700">
-                            عندنا مفاجئة لذيذة ليك وهي انك تقدر تشارك التطبيق مع أي حد حبيبك (سواء كان أخ/ت، زوج/ة، صديق مقرب) أي حد عزيز عليك وحابب تهاديه ف تقدر تعمل ده 💚
+                        <p className="text-[--accent-navy] dark:text-gray-300 text-lg font-bold mb-6 leading-relaxed bg-gray-50 dark:bg-slate-800/50 p-5 rounded-xl border-2 border-gray-200 dark:border-slate-700">
+                            عندنا مفاجئة لذيذة ليك وهي إنك تقدر تشارك التطبيق مع أي حد حبيبك (سواء كان أخ/ت، زوج/ة، صديق مقرب) أي حد عزيز عليك وحابب تهاديه ف تقدر تعمل ده 💚
                         </p>
-                        <div className="flex flex-col sm:flex-row justify-center gap-4 mt-6">
-                            <button onClick={handleCopyLink} className="text-[--accent-navy] dark:text-white bg-gray-100 hover:bg-gray-200 dark:bg-slate-700 dark:hover:bg-slate-600 font-extrabold rounded-xl text-lg px-8 py-3.5 transition-all transform hover:scale-105 flex items-center justify-center gap-3 border-2 border-gray-300 dark:border-slate-500 shadow-sm">
-                                <Icon name="copy" className="w-5 h-5" /><span>نسخ رابط التطبيق</span>
+                        <div className="flex flex-col justify-center gap-4 mt-6">
+                            <button onClick={handleCopyLink} className="text-white bg-[--accent-navy] hover:bg-[#152030] dark:bg-[--accent-green] dark:text-[--accent-navy] font-extrabold rounded-xl text-xl px-8 py-4 transition-all transform hover:scale-105 flex items-center justify-center gap-3 border-2 border-transparent shadow-md">
+                                <Icon name="copy" className="w-6 h-6" /><span>نسخ رابط التطبيق</span>
                             </button>
                         </div>
                     </div>
 
                     {/* قسم الاقتراحات الجديد */}
-                    <div className="content-card p-8 rounded-2xl shadow-lg max-w-2xl mx-auto text-center mt-8 border-2 border-orange-300 dark:border-orange-800 bg-orange-50/50 dark:bg-slate-800/80 relative overflow-hidden">
-                        <div className="absolute -top-10 -right-10 w-32 h-32 bg-orange-500 opacity-10 rounded-full blur-3xl"></div>
-                        <div className="bg-orange-100 dark:bg-orange-900/50 w-20 h-20 mx-auto rounded-2xl flex items-center justify-center mb-5 border border-orange-200 dark:border-orange-800 shadow-sm relative z-10">
-                            <Icon name="lightbulb" className="w-10 h-10 text-orange-500" />
+                    <div className="content-card p-8 rounded-2xl shadow-lg max-w-2xl mx-auto text-center mt-8 border-2 border-[--accent-green] bg-green-50/50 dark:bg-slate-800/80 relative overflow-hidden">
+                        <div className="absolute -top-10 -right-10 w-32 h-32 bg-[--accent-green] opacity-10 rounded-full blur-3xl"></div>
+                        <div className="bg-white dark:bg-slate-700 w-20 h-20 mx-auto rounded-2xl flex items-center justify-center mb-5 border-2 border-[--accent-green] shadow-sm relative z-10">
+                            <Icon name="lightbulb" className="w-10 h-10 text-[--accent-green]" />
                         </div>
-                        <h2 className="text-2xl sm:text-3xl font-extrabold text-orange-600 dark:text-orange-400 text-center mb-4 relative z-10">عندك مسار أو أداة جديدة؟</h2>
-                        <p className="text-center text-gray-700 dark:text-gray-300 font-bold mb-8 leading-relaxed relative z-10">
-                            تقدر تشاركنا أي مسار أو اداة مش موجودة وحابب نضيفها للتطبيق عشان كلنا نستفيد!
+                        <h2 className="text-2xl sm:text-3xl font-extrabold text-[--accent-navy] dark:text-white text-center mb-4 relative z-10">عندك مسار أو أداة جديدة؟</h2>
+                        <p className="text-center text-gray-700 dark:text-gray-300 font-bold mb-8 leading-relaxed relative z-10 text-lg">
+                            تقدر تشاركنا أي مسار أو أداة مش موجودة وحابب نضيفها للتطبيق عشان كلنا نستفيد!
                         </p>
-                        <a href="https://wa.me/201007964766?text=أقترح%20إضافة%20التالي%20للتطبيق:%20" target="_blank" rel="noopener noreferrer" className="text-white bg-[#25D366] hover:bg-[#128C7E] font-extrabold rounded-xl text-lg w-full sm:w-auto px-10 py-4 text-center transition-all transform hover:scale-105 inline-flex items-center justify-center gap-3 shadow-lg relative z-10 border border-green-600">
-                            <Icon name="message-circle" className="w-6 h-6" /><span>أرسل اقتراحك (واتساب)</span>
+                        <a href="https://wa.me/201007964766?text=أقترح%20إضافة%20التالي%20للتطبيق:%20" target="_blank" rel="noopener noreferrer" className="text-[--accent-navy] bg-[#25D366] hover:bg-[#128C7E] hover:text-white font-extrabold rounded-xl text-xl w-full px-10 py-4 text-center transition-all transform hover:scale-105 inline-flex items-center justify-center gap-3 shadow-lg relative z-10 border-2 border-transparent">
+                            <Icon name="message-circle" className="w-7 h-7" /><span>أرسل اقتراحك (واتساب)</span>
                         </a>
                     </div>
 
