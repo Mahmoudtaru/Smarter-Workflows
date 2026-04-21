@@ -604,11 +604,29 @@
                                  <span className="text-sm font-semibold opacity-90 text-[--accent-green]">لعلاقة ممتدة مع الذكاء الاصطناعي</span>
                              </div>
                          </a>
-                         <a href="https://t.me/+D5qrN2SQSC8wNDU0" target="_blank" className="bg-gradient-to-r from-[--accent-green] to-[#7a9632] w-full py-3 px-5 rounded-xl flex items-center justify-center gap-3 font-bold text-lg shadow-md text-white transition-all transform hover:scale-[1.02] border-2 border-[--accent-navy]">
-                             <div className="bg-white/20 p-1.5 rounded-lg"><Icon name="send" className="w-6 h-6" /></div>
-                             <span>مجتمع التليجرام (المناقشة العامة)</span>
-                         </a>
-                         <a href="https://chat.whatsapp.com/C68FsQh5eYM7YaKAXCk9vQ" target="_blank" className="w-full py-3 px-5 rounded-xl flex items-center justify-center gap-3 font-bold text-lg shadow-md text-white bg-[#25D366] hover:bg-[#128C7E] transition-all transform hover:scale-[1.02] border-2 border-green-800">
+                         
+                         <div className="bg-gradient-to-r from-[--accent-green]/10 to-transparent dark:from-[--accent-green]/5 dark:to-transparent border-2 border-[--accent-green] w-full p-4 rounded-xl flex flex-col gap-3 shadow-sm">
+                             <div className="flex items-center gap-3 text-[--accent-navy] dark:text-white font-bold text-lg mb-1">
+                                 <div className="bg-[--accent-green] p-1.5 rounded-lg text-white shadow-sm"><Icon name="layout-grid" className="w-5 h-5" /></div>
+                                 <span>تطبيقات الدبلومة (لكل الدفعات)</span>
+                             </div>
+                             <div className="grid grid-cols-2 gap-3">
+                                 <a href="https://mahmoudtaru.github.io/Smarter-With-Ai-first-batch/" target="_blank" className="bg-white dark:bg-slate-800 border-2 border-blue-200 dark:border-blue-800/50 hover:border-blue-500 dark:hover:border-blue-500 text-[--accent-navy] dark:text-gray-200 py-2.5 rounded-lg font-extrabold text-center transition-all hover:shadow-md hover:-translate-y-0.5 flex items-center justify-center gap-2 hover:bg-blue-50 dark:hover:bg-blue-900/20">
+                                     <div className="w-2 h-2 rounded-full bg-blue-500"></div><span>الدفعة 1</span>
+                                 </a>
+                                 <a href="https://mahmoudtaru.github.io/Smarter-with-Ai-Round-2/" target="_blank" className="bg-white dark:bg-slate-800 border-2 border-purple-200 dark:border-purple-800/50 hover:border-purple-500 dark:hover:border-purple-500 text-[--accent-navy] dark:text-gray-200 py-2.5 rounded-lg font-extrabold text-center transition-all hover:shadow-md hover:-translate-y-0.5 flex items-center justify-center gap-2 hover:bg-purple-50 dark:hover:bg-purple-900/20">
+                                     <div className="w-2 h-2 rounded-full bg-purple-500"></div><span>الدفعة 2</span>
+                                 </a>
+                                 <a href="https://mahmoudtaru.github.io/Smarter-With-Ai-Round-3/" target="_blank" className="bg-white dark:bg-slate-800 border-2 border-orange-200 dark:border-orange-800/50 hover:border-orange-500 dark:hover:border-orange-500 text-[--accent-navy] dark:text-gray-200 py-2.5 rounded-lg font-extrabold text-center transition-all hover:shadow-md hover:-translate-y-0.5 flex items-center justify-center gap-2 hover:bg-orange-50 dark:hover:bg-orange-900/20">
+                                     <div className="w-2 h-2 rounded-full bg-orange-500"></div><span>الدفعة 3</span>
+                                 </a>
+                                 <a href="https://mahmoudtaru.github.io/Smarter-With-Ai-Round-4/" target="_blank" className="bg-white dark:bg-slate-800 border-2 border-[--accent-green]/40 dark:border-[--accent-green]/30 hover:border-[--accent-green] dark:hover:border-[--accent-green] text-[--accent-navy] dark:text-gray-200 py-2.5 rounded-lg font-extrabold text-center transition-all hover:shadow-md hover:-translate-y-0.5 flex items-center justify-center gap-2 hover:bg-green-50 dark:hover:bg-[--accent-green]/10">
+                                     <div className="w-2 h-2 rounded-full bg-[--accent-green]"></div><span>الدفعة 4</span>
+                                 </a>
+                             </div>
+                         </div>
+
+                         <a href="https://chat.whatsapp.com/LyelEjQtlEWCLbqp0thgJw" target="_blank" className="w-full py-3 px-5 rounded-xl flex items-center justify-center gap-3 font-bold text-lg shadow-md text-white bg-[#25D366] hover:bg-[#128C7E] transition-all transform hover:scale-[1.02] border-2 border-green-800">
                              <div className="bg-white/20 p-1.5 rounded-lg"><Icon name="message-circle" className="w-6 h-6" /></div>
                              <span>جروب الواتساب</span>
                          </a>
@@ -911,20 +929,9 @@
         const MoreTab = () => {
             const [openAccordion, setOpenAccordion] = useState(null);
             const [openNestedAccordion, setNestedAccordion] = useState(null);
-            const [copied, setCopied] = useState(false);
+            
             const handleToggle = (title) => setOpenAccordion(openAccordion === title ? null : title);
             const handleNestedToggle = (title) => setNestedAccordion(openNestedAccordion === title ? null : title);
-
-            const handleCopyLink = () => {
-                const el = document.createElement('textarea');
-                el.value = window.location.href;
-                document.body.appendChild(el);
-                el.select();
-                document.execCommand('copy');
-                document.body.removeChild(el);
-                setCopied(true);
-                setTimeout(() => setCopied(false), 3000);
-            };
 
             return (
                 <div className="space-y-6 animate-fadeIn">
@@ -1035,22 +1042,6 @@
                                 </NestedAccordion>
                             </div>
                         </Accordion>
-                    </div>
-
-                    {/* قسم شارك التطبيق الجديد */}
-                    <div className="content-card p-8 rounded-2xl shadow-lg max-w-2xl mx-auto text-center mt-8 border-2 border-[--accent-green] dark:border-[--accent-green]">
-                        <div className="bg-green-50 dark:bg-slate-800 w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-4 border-2 border-[--accent-green] shadow-inner">
-                            <Icon name="share-2" className="w-12 h-12 text-[--accent-green]" />
-                        </div>
-                        <h2 className="page-title text-2xl sm:text-3xl font-extrabold text-center my-4">شارك التطبيق مع أحبابك!</h2>
-                        <p className="text-[--accent-navy] dark:text-gray-300 text-lg font-bold mb-6 leading-relaxed bg-gray-50 dark:bg-slate-800/50 p-5 rounded-xl border-2 border-gray-200 dark:border-slate-700">
-                            عندنا مفاجئة لذيذة ليك وهي إنك تقدر تشارك التطبيق مع أي حد حبيبك (سواء كان أخ/ت، زوج/ة، صديق مقرب) أي حد عزيز عليك وحابب تهاديه ف تقدر تعمل ده 💚
-                        </p>
-                        <div className="flex flex-col justify-center gap-4 mt-6">
-                            <button onClick={handleCopyLink} className={`text-white font-extrabold rounded-xl text-xl px-8 py-4 transition-all transform hover:scale-105 flex items-center justify-center gap-3 border-2 border-transparent shadow-md ${copied ? 'bg-green-600 hover:bg-green-700' : 'bg-[--accent-navy] hover:bg-[#152030] dark:bg-[--accent-green] dark:text-[--accent-navy]'}`}>
-                                <Icon name={copied ? "check-circle" : "copy"} className="w-6 h-6" /><span>{copied ? "تم نسخ الرابط!" : "نسخ رابط التطبيق"}</span>
-                            </button>
-                        </div>
                     </div>
 
                     {/* قسم الاقتراحات الجديد */}
