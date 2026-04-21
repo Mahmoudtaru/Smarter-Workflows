@@ -178,8 +178,8 @@
     
     <div id="welcome-screen" class="fixed inset-0 bg-[#1e2d44] flex flex-col justify-center items-center z-50 transition-opacity duration-700">
         <div class="w-full flex flex-col items-center text-center px-4">
-            <div class="w-40 h-40 mx-auto mb-8 rounded-full bg-white p-2 shadow-[0_0_30px_rgba(146,180,59,0.5)] flex items-center justify-center animate-fadeIn" style="animation-delay: 0.2s;">
-                <img src="https://i.postimg.cc/PqVq08Tm/My-Logo.jpg" alt="Logo" class="w-full h-full object-cover rounded-full" />
+            <div class="w-40 h-40 sm:w-48 sm:h-48 mx-auto mb-8 rounded-full shadow-[0_0_30px_rgba(146,180,59,0.5)] flex items-center justify-center animate-fadeIn overflow-hidden border-2 border-[--accent-green]/20" style="animation-delay: 0.2s;">
+                <img src="https://i.postimg.cc/PqVq08Tm/My-Logo.jpg" alt="Logo" class="w-full h-full object-cover scale-105" />
             </div>
             <h1 id="welcome-title" dir="rtl" class="text-4xl sm:text-6xl font-bold text-[--text-light] mb-4 min-h-[60px]"></h1>
             <p id="welcome-subtitle" class="text-xl sm:text-2xl text-[--accent-green] mt-2 min-h-[44px] font-semibold"></p>
@@ -929,9 +929,20 @@
         const MoreTab = () => {
             const [openAccordion, setOpenAccordion] = useState(null);
             const [openNestedAccordion, setNestedAccordion] = useState(null);
-            
+            const [copied, setCopied] = useState(false);
             const handleToggle = (title) => setOpenAccordion(openAccordion === title ? null : title);
             const handleNestedToggle = (title) => setNestedAccordion(openNestedAccordion === title ? null : title);
+
+            const handleCopyLink = () => {
+                const el = document.createElement('textarea');
+                el.value = window.location.href;
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 3000);
+            };
 
             return (
                 <div className="space-y-6 animate-fadeIn">
@@ -1042,6 +1053,22 @@
                                 </NestedAccordion>
                             </div>
                         </Accordion>
+                    </div>
+
+                    {/* قسم شارك التطبيق الجديد */}
+                    <div className="content-card p-8 rounded-2xl shadow-lg max-w-2xl mx-auto text-center mt-8 border-2 border-[--accent-green] dark:border-[--accent-green]">
+                        <div className="bg-green-50 dark:bg-slate-800 w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-4 border-2 border-[--accent-green] shadow-inner">
+                            <Icon name="share-2" className="w-12 h-12 text-[--accent-green]" />
+                        </div>
+                        <h2 className="page-title text-2xl sm:text-3xl font-extrabold text-center my-4">شارك التطبيق مع أحبابك!</h2>
+                        <p className="text-[--accent-navy] dark:text-gray-300 text-lg font-bold mb-6 leading-relaxed bg-gray-50 dark:bg-slate-800/50 p-5 rounded-xl border-2 border-gray-200 dark:border-slate-700">
+                            عندنا مفاجئة لذيذة ليك وهي إنك تقدر تشارك التطبيق مع أي حد حبيبك (سواء كان أخ/ت، زوج/ة، صديق مقرب) أي حد عزيز عليك وحابب تهاديه ف تقدر تعمل ده 💚
+                        </p>
+                        <div className="flex flex-col justify-center gap-4 mt-6">
+                            <button onClick={handleCopyLink} className={`text-white font-extrabold rounded-xl text-xl px-8 py-4 transition-all transform hover:scale-105 flex items-center justify-center gap-3 border-2 border-transparent shadow-md ${copied ? 'bg-green-600 hover:bg-green-700' : 'bg-[--accent-navy] hover:bg-[#152030] dark:bg-[--accent-green] dark:text-[--accent-navy]'}`}>
+                                <Icon name={copied ? "check-circle" : "copy"} className="w-6 h-6" /><span>{copied ? "تم نسخ الرابط!" : "نسخ رابط التطبيق"}</span>
+                            </button>
+                        </div>
                     </div>
 
                     {/* قسم الاقتراحات الجديد */}
